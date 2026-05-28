@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/CatalogContext/">
+    <Project Path="src/CatalogContext/CatalogContext.Api/CatalogContext.Api.csproj" />
+    <Project Path="src/CatalogContext/CatalogContext.Application/CatalogContext.Application.csproj" />
+    <Project Path="src/CatalogContext/CatalogContext.Domain/CatalogContext.Domain.csproj" />
+    <Project Path="src/CatalogContext/CatalogContext.Infrastructure/CatalogContext.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderingContext/">
+    <Project Path="src/OrderingContext/OrderingContext.Api/OrderingContext.Api.csproj" />
+    <Project Path="src/OrderingContext/OrderingContext.Application/OrderingContext.Application.csproj" />
+    <Project Path="src/OrderingContext/OrderingContext.Domain/OrderingContext.Domain.csproj" />
+    <Project Path="src/OrderingContext/OrderingContext.Infrastructure/OrderingContext.Infrastructure.csproj" />
+  </Folder>
+</Solution>
