@@ -17,13 +17,14 @@ public class Product
 
     #region Constructors
 
-    protected Product() {}
+    protected Product() {  }
 
-    public Product(string name, string description, decimal price)
+    public Product(string name, string description, int quantity, decimal price)
     {
         Name = name;
         Description = description;
         Price = price;
+        Quantity = quantity;
     }
 
     #endregion

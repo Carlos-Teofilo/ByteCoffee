@@ -1,5 +1,5 @@
+using CatalogContext.Application.DTOs;
 using MassTransit;
-using OrderingContext.Application.DTOs;
 using CatalogContext.Domain.Repositories;
 
 namespace CatalogContext.Infrastructure.Messaging.Consumers;

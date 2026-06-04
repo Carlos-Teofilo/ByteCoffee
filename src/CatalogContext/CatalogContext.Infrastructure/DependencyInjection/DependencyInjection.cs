@@ -35,6 +35,18 @@ public static class DependencyInjection
         });
         services.AddScoped<IProductRepository, ProductRepository>();
         
+        services.AddScoped<
+            CatalogContext.Application.UseCases.Create.Contracts.IRepository,
+            CatalogContext.Infrastructure.UseCases.Create.Repository>();
+        
+        services.AddScoped<
+            CatalogContext.Application.UseCases.GetAll.Contracts.IRepository,
+            CatalogContext.Infrastructure.UseCases.GetAll.Repository>();
+        
+        services.AddScoped<
+            CatalogContext.Application.UseCases.GetById.Contracts.IRepository,
+            CatalogContext.Infrastructure.UseCases.GetById.Repository>();
+        
         return services;
     }
 }

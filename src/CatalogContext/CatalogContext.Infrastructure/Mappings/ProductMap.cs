@@ -2,14 +2,17 @@ using CatalogContext.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CatalogContext.Infrastructure.Data.Mappings;
+namespace CatalogContext.Infrastructure.Mappings;
 
 public class ProductMap : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
-        builder.ToTable("product", t => 
-            t.HasCheckConstraint("CK_product_price_greater_than_zero", "price > 0"));
+        builder.ToTable("product", t =>
+        {
+            t.HasCheckConstraint("CK_product_price_greater_than_zero", "price > 0");
+            t.HasCheckConstraint("CK_product_quantity_greater_or_equal_than_zero", "quantity > 0");
+        });
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
@@ -22,6 +25,11 @@ public class ProductMap : IEntityTypeConfiguration<Product>
             .HasMaxLength(100)
             .IsRequired();
 
+        builder.Property(x => x.Quantity)
+            .HasColumnName("quantity")
+            .HasColumnType("int")
+            .IsRequired();
+        
         builder.Property(x => x.Description)
             .HasColumnName("description")
             .HasColumnType("varchar")

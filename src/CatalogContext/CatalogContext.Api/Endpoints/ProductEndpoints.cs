@@ -1,5 +1,4 @@
-using CatalogContext.Application.DTOs;
-using CatalogContext.Application.UseCases;
+using MediatR;
 
 namespace CatalogContext.Api.Endpoints;
 
@@ -15,31 +14,41 @@ public static class ProductEndpoints
     }
 
     private static async Task<IResult> GetByIdAsync(
-        Guid id,
-        GetProductUseCase useCase,
+        [AsParameters] CatalogContext.Application.UseCases.GetById.Request request, // 🟢 Adicionado [AsParameters]
+        ISender mediator,
         CancellationToken cancellationToken)
     {
-        var product = await useCase.GetByIdAsync(id, cancellationToken);
-
-        return product is null
-        ? Results.NotFound($"Product with id {id} not found")
-        : Results.Ok(product);
+        var product = await mediator.Send(request, cancellationToken);
+    
+        if (product.Data is null)
+            return Results.Json(product.Message, statusCode: product.StatusCode);
+        
+        return Results.Ok(product);
     }
     
     private static async Task<IResult> GetAllAsync(
-        GetProductUseCase useCase)
+        [AsParameters] CatalogContext.Application.UseCases.GetAll.Request request,
+        ISender mediator,
+        CancellationToken cancellationToken)
     {
-        var products = await useCase.GetAllAsync();
-        return Results.Ok(products);
+        var response = await mediator.Send(request, cancellationToken);
+
+        if (!response.IsSuccess)
+            return Results.Json(response, statusCode: response.StatusCode);
+
+        return Results.Ok(response);
     }
     
     private static async Task<IResult> CreateAsync(
-        CreateProductRequest request,
-        CreateProductUseCase useCase,
+        CatalogContext.Application.UseCases.Create.Request request,
+        ISender mediator,
         CancellationToken cancellationToken)
     {
-        var response = await useCase.ExecuteAsync(request, cancellationToken);
+        var response = await mediator.Send(request, cancellationToken);
         
-        return Results.Created("/api/v1/products/{id:guid}", response);
+        if (!response.IsSuccess)
+            return Results.Json(response, statusCode: response.StatusCode);
+
+        return Results.Created($"/api/v1/products/{response.Data.Id}", response);
     }
 }

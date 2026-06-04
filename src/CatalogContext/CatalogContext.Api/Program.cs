@@ -10,6 +10,7 @@ var rabbitMqConnectionString = builder.Configuration.GetConnectionString("Rabbit
 if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(rabbitMqConnectionString))
     throw new Exception("A connection string não pôde ser carregada. Verifique o local do appsettings.json.");
 
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(Configuration).Assembly));
 builder.Services.AddInfrastructure(connectionString, rabbitMqConnectionString);
 builder.Services.AddApplication();
 
