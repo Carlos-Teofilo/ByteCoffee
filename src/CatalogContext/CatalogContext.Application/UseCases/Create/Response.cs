@@ -7,7 +7,7 @@ public class Response : Shared.Response
 {
     #region Properties
 
-    public CreateProductResponse Data { get; private set; }
+    public CreateProductResponse Product { get; private set; }
 
     #endregion
 
@@ -19,7 +19,7 @@ public class Response : Shared.Response
     {
         Message = message;
         StatusCode = 201;
-        Data = data;
+        Product = data;
         Notifications = null;
     }
 

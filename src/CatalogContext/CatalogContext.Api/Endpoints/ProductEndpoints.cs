@@ -20,7 +20,7 @@ public static class ProductEndpoints
     {
         var product = await mediator.Send(request, cancellationToken);
     
-        if (product.Data is null)
+        if (product.Product is null)
             return Results.Json(product.Message, statusCode: product.StatusCode);
         
         return Results.Ok(product);
@@ -49,6 +49,6 @@ public static class ProductEndpoints
         if (!response.IsSuccess)
             return Results.Json(response, statusCode: response.StatusCode);
 
-        return Results.Created($"/api/v1/products/{response.Data.Id}", response);
+        return Results.Created($"/api/v1/products/{response.Product.Id}", response);
     }
 }
