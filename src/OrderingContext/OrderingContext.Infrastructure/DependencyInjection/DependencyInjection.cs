@@ -1,6 +1,5 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OrderingContext.Application.Interfaces;
 using OrderingContext.Domain.Repositories;
@@ -21,6 +20,9 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<
+            OrderingContext.Application.UseCases.Create.Contracts.IRepository,
+            OrderingContext.Infrastructure.UseCases.Create.Repository>();
 
         services.AddMassTransit(busConfiguration =>
         {

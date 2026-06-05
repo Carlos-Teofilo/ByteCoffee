@@ -1,3 +1,4 @@
+using MediatR;
 using OrderingContext.Application.DTOs;
 using OrderingContext.Application.UseCases;
 
@@ -14,16 +15,20 @@ public static class OrderEndpoints
     }
 
     private static async Task<IResult> CreateAsync(
-        CreateOrderRequest request,
-        CreateOrderUseCase useCase,
+        OrderingContext.Application.UseCases.Create.Request request,
+        ISender mediator,
         CancellationToken cancellationToken)
     {
-        var order = await useCase.ExecuteAsync(request, cancellationToken);
-        return Results.Created("/api/v1/orders", order);
+        var response = await mediator.Send(request, cancellationToken);
+        
+        if (!response.IsSuccess)
+            return Results.Json(response, statusCode: response.StatusCode);
+        
+        return Results.Created($"/api/v1/orders/{response.Order?.Id}", response);
     }
 
     private static async Task<IResult> GetAllAsync(
-        Guid id,
+        [AsParameters] Guid id,
         GetOrderUseCase useCase,
         CancellationToken cancellationToken)
     {

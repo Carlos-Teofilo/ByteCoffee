@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CatalogContext\CatalogContext.Domain\CatalogContext.Domain.csproj" />
     <ProjectReference Include="..\OrderingContext.Domain\OrderingContext.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Flunt" Version="2.0.5" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0" />
   </ItemGroup>
 

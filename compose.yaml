@@ -1,6 +1,7 @@
 services:
   catalogdb:
     image: postgres:18
+    container_name: bytecoffee-catalogdb
     environment:
       POSTGRES_DB: catalogdb
       POSTGRES_USER: postgres
@@ -9,6 +10,11 @@ services:
       - "5432:5432"
     volumes:
       - catalog_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d catalogdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   catalogservice:
     build:
@@ -20,11 +26,14 @@ services:
       - ConnectionStrings__DefaultConnection=Host=catalogdb;Database=catalogdb;Username=postgres;Password=pass
       - ConnectionStrings__RabbitMqConnection=rabbitmq://guest:pass@rabbitmq
     depends_on:
-      - catalogdb
-      - rabbitmq
+      catalogdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
   
   orderingdb:
     image: postgres:18
+    container_name: bytecoffee-orderingdb
     environment:
       POSTGRES_DB: orderingdb
       POSTGRES_USER: postgres
@@ -33,6 +42,11 @@ services:
       - "5433:5432"
     volumes:
       - ordering_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d orderingdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   orderingservice:
     build:
@@ -44,17 +58,25 @@ services:
       - ConnectionStrings__DefaultConnection=Host=orderingdb;Database=orderingdb;Username=postgres;Password=pass
       - ConnectionStrings__RabbitMqConnection=rabbitmq://guest:pass@rabbitmq
     depends_on:
-      - orderingdb
-      - rabbitmq
+      orderingdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   rabbitmq:
     image: rabbitmq:4-management
+    container_name: bytecoffee-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: pass
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   catalog_data:
