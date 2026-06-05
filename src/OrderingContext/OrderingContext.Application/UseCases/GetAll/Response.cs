@@ -1,25 +1,24 @@
-using System.Collections.Generic;
-using CatalogContext.Application.UseCases.GetById.DTOs;
 using Flunt.Notifications;
+using OrderingContext.Application.UseCases.GetAll.DTOs;
 
-namespace CatalogContext.Application.UseCases.GetById;
+namespace OrderingContext.Application.UseCases.GetAll;
 
 public class Response : Shared.Response
 {
     #region Properties
 
-    public DetailProductResponse? Product { get; set; }
+    public PagedOrderResponse? Data { get; set; } = null;
 
     #endregion
     
     #region Constructors
-
+    
     protected Response() { }
 
-    public Response(string message, DetailProductResponse data)
+    public Response(string message, PagedOrderResponse data)
     {
         Message = message;
-        Product = data;
+        Data = data;
         StatusCode = 200;
         Notifications = null;
     }

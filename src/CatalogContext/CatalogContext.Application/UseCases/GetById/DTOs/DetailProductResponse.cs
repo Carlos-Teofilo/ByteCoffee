@@ -1,3 +1,5 @@
+using System;
+
 namespace CatalogContext.Application.UseCases.GetById.DTOs;
 
 public record DetailProductResponse(

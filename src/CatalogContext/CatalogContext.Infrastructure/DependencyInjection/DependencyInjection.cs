@@ -1,7 +1,5 @@
-using CatalogContext.Domain.Repositories;
 using CatalogContext.Infrastructure.Data;
 using CatalogContext.Infrastructure.Messaging.Consumers;
-using CatalogContext.Infrastructure.Repositories;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +31,6 @@ public static class DependencyInjection
                 });
             });
         });
-        services.AddScoped<IProductRepository, ProductRepository>();
         
         services.AddScoped<
             CatalogContext.Application.UseCases.Create.Contracts.IRepository,

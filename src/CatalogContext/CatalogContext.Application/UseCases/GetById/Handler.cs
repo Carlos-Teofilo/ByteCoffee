@@ -1,4 +1,7 @@
+using System;
 using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 using CatalogContext.Application.UseCases.GetById.Contracts;
 using CatalogContext.Application.UseCases.GetById.DTOs;
 using CatalogContext.Domain.Entities;

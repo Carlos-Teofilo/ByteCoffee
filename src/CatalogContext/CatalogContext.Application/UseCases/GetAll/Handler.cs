@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CatalogContext.Application.UseCases.GetAll.Contracts;
 using CatalogContext.Application.UseCases.GetAll.DTOs;
 using MediatR;
@@ -25,7 +29,7 @@ public class Handler(IRepository repository) : IRequestHandler<Request, Response
         {
             var (products, total) = await _repository.GetAllAsync(request.Page, request.PageSize, cancellationToken);
             var formattedOutput = products.Select(x => new SummaryProductResponse(x.Id, x.Name, x.Description, x.Quantity, x.Price));
-            var pagedResponse = new PagedProductReponse(formattedOutput, request.Page, request.PageSize, total);
+            var pagedResponse = new PagedProductResponse(formattedOutput, request.Page, request.PageSize, total);
             return new Response("Requisição aprovada", pagedResponse);
         }
         catch (Exception e)

@@ -2,10 +2,8 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OrderingContext.Application.Interfaces;
-using OrderingContext.Domain.Repositories;
 using OrderingContext.Infrastructure.Data;
 using OrderingContext.Infrastructure.Messaging;
-using OrderingContext.Infrastructure.Repositories;
 
 namespace OrderingContext.Infrastructure.DependencyInjection;
 
@@ -19,10 +17,13 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString);
         });
 
-        services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<
             OrderingContext.Application.UseCases.Create.Contracts.IRepository,
             OrderingContext.Infrastructure.UseCases.Create.Repository>();
+        
+        services.AddScoped<
+            OrderingContext.Application.UseCases.GetAll.Contracts.IRepository,
+            OrderingContext.Infrastructure.UseCases.GetAll.Repository>();
 
         services.AddMassTransit(busConfiguration =>
         {

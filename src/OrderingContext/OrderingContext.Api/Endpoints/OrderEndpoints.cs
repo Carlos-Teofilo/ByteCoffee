@@ -1,6 +1,4 @@
 using MediatR;
-using OrderingContext.Application.DTOs;
-using OrderingContext.Application.UseCases;
 
 namespace OrderingContext.Api.Endpoints;
 
@@ -11,7 +9,7 @@ public static class OrderEndpoints
         var group = builder.MapGroup("/api/v1/orders");
 
         group.MapPost("/", CreateAsync);
-        group.MapGet("/{id:guid}", GetAllAsync);
+        group.MapGet("/", GetAllAsync);
     }
 
     private static async Task<IResult> CreateAsync(
@@ -28,12 +26,15 @@ public static class OrderEndpoints
     }
 
     private static async Task<IResult> GetAllAsync(
-        [AsParameters] Guid id,
-        GetOrderUseCase useCase,
+        [AsParameters] OrderingContext.Application.UseCases.GetAll.Request request,
+        ISender mediator,
         CancellationToken cancellationToken)
     {
-        var orders = await useCase.GetAllAsync(id, cancellationToken);
+        var response = await mediator.Send(request, cancellationToken);
         
-        return Results.Ok(orders);
+        if (!response.IsSuccess)
+            return Results.Json(response, statusCode: response.StatusCode);
+        
+        return Results.Ok(response);
     }
 }

@@ -1,13 +1,14 @@
-using CatalogContext.Application.DTOs;
+using CatalogContext.Application.Events;
 using MassTransit;
-using CatalogContext.Domain.Repositories;
 
 namespace CatalogContext.Infrastructure.Messaging.Consumers;
 
-public class OrderCreatedConsumer(IProductRepository productRepository)
+public class OrderCreatedConsumer(
+    CatalogContext.Application.UseCases.Create.Contracts.IRepository productRepository
+    )
     : IConsumer<OrderCreatedEvent>
 {
-    private readonly IProductRepository _productRepository = productRepository;
+    private readonly CatalogContext.Application.UseCases.Create.Contracts.IRepository _productRepository = productRepository;
 
     public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
     {

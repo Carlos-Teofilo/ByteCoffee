@@ -1,3 +1,5 @@
+using System;
+
 namespace CatalogContext.Application.UseCases.Create.DTOs;
 
 public record CreateProductResponse(

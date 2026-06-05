@@ -1,3 +1,4 @@
+using System;
 using MediatR;
 
 namespace CatalogContext.Application.UseCases.GetById;

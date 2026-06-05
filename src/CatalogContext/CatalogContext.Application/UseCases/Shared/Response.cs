@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Flunt.Notifications;
 
 namespace CatalogContext.Application.UseCases.Shared;

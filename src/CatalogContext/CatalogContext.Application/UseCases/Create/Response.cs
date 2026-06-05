@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CatalogContext.Application.UseCases.Create.DTOs;
 using Flunt.Notifications;
 

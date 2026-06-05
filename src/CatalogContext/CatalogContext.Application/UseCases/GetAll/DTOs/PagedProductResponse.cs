@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace CatalogContext.Application.UseCases.GetAll.DTOs;
 
-public record PagedProductReponse(
+public record PagedProductResponse(
     IEnumerable<SummaryProductResponse> Products,
     int Page,
     int PageSize,

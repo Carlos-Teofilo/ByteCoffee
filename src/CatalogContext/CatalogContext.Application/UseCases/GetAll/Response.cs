@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CatalogContext.Application.UseCases.GetAll.DTOs;
 using Flunt.Notifications;
 
@@ -7,7 +8,7 @@ public class Response : Shared.Response
 {
     #region Properties
     
-    public PagedProductReponse? Data { get; set; }
+    public PagedProductResponse? Data { get; set; }
     
     #endregion
     
@@ -25,7 +26,7 @@ public class Response : Shared.Response
         Notifications = notifications;
     }
 
-    public Response(string message, PagedProductReponse data)
+    public Response(string message, PagedProductResponse data)
     {
         Message = message;
         StatusCode = 200;

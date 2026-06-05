@@ -1,3 +1,5 @@
+using System;
+
 namespace CatalogContext.Application.UseCases.GetAll.DTOs;
 
 public record SummaryProductResponse(

@@ -1,4 +1,6 @@
-namespace OrderingContext.Application.DTOs;
+using System;
+
+namespace CatalogContext.Application.Events;
 
 public record OrderCreatedEvent(
     int OrderId,
